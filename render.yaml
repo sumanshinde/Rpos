@@ -1,0 +1,28 @@
+services:
+  # Backend: Django REST Framework
+  - type: web
+    name: pos-backend
+    env: python
+    buildCommand: "./render_build.sh"
+    startCommand: "cd pos-backend-django && gunicorn pos_backend.wsgi:application"
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: "pos-backend.onrender.com" # Update this after first deploy
+      - key: PYTHON_VERSION
+        value: 3.10.0 # Adjust to your local python version if needed
+      - key: DATABASE_URL
+        value: "" # SQLite will be used by default if empty
+
+  # Frontend: React + Vite
+  - type: static
+    name: pos-frontend
+    env: static
+    buildCommand: "cd pos-frontend && npm install && npm run build"
+    publishPath: "./pos-frontend/dist"
+    envVars:
+      - key: VITE_API_URL
+        value: "https://pos-backend.onrender.com/api" # Update this after backend deploy
