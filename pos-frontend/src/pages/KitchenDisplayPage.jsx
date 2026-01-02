@@ -26,7 +26,7 @@ const KitchenDisplayPage = () => {
         // Refresh orders every 10 seconds for kitchen (more frequent than orders page)
         const interval = setInterval(() => {
             dispatch(fetchOrders());
-        }, 10000);
+        }, 15000);
         return () => clearInterval(interval);
     }, [dispatch]);
 

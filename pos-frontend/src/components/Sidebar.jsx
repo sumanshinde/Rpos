@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Home, UtensilsCrossed, LayoutGrid, History, Users as UsersIcon, Settings, ChefHat, BarChart3, LogOut } from 'lucide-react';
+import { Home, UtensilsCrossed, LayoutGrid, History, Users as UsersIcon, Settings, ChefHat, BarChart3, LogOut, BookOpen } from 'lucide-react';
 import { logout, selectUser } from '../store/slices/authSlice';
+import Logo from './Logo';
 
 const Sidebar = ({ activeView, onViewChange }) => {
     const dispatch = useDispatch();
@@ -9,6 +10,7 @@ const Sidebar = ({ activeView, onViewChange }) => {
 
     const navItems = [
         { id: 'pos', icon: UtensilsCrossed, label: 'POS', active: true },
+        { id: 'menu', icon: BookOpen, label: 'Menu' },
         { id: 'tables', icon: LayoutGrid, label: 'Tables' },
         { id: 'orders', icon: History, label: 'Orders' },
         { id: 'kitchen', icon: ChefHat, label: 'Kitchen' },
@@ -26,9 +28,7 @@ const Sidebar = ({ activeView, onViewChange }) => {
     return (
         <div className="h-screen w-20 bg-gray-900 flex flex-col items-center py-8 fixed left-0 top-0 z-50">
             <div className="mb-8">
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                    R
-                </div>
+                <Logo />
             </div>
 
             <nav className="flex-1 flex flex-col gap-6 w-full">

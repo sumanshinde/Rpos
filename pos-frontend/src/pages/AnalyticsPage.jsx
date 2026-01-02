@@ -185,8 +185,8 @@ const AnalyticsPage = () => {
                                         </td>
                                         <td className="py-4 px-4 text-right font-bold text-green-600">₹{parseFloat(order.total_amount).toFixed(2)}</td>
                                         <td className="py-4 px-4 text-right">
-                                            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${order.status === 'completed' ? 'bg-green-100 text-green-800' :
-                                                    order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'
+                                            <span className={`px-2 py-1 rounded-full text-xs font-semibold ${order.status === 'served' ? 'bg-green-100 text-green-800' :
+                                                order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 text-gray-800'
                                                 }`}>
                                                 {order.status}
                                             </span>

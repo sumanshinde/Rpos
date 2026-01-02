@@ -21,7 +21,7 @@ const OrdersPage = () => {
         // Refresh orders every 30 seconds
         const interval = setInterval(() => {
             dispatch(fetchOrders());
-        }, 30000);
+        }, 60000);
         return () => clearInterval(interval);
     }, [dispatch]);
 

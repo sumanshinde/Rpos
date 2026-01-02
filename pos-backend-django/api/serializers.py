@@ -4,14 +4,21 @@ from django.contrib.auth.models import User
 from decimal import Decimal
 
 class UserSerializer(serializers.ModelSerializer):
+    role = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ('id', 'username', 'email', 'password')
+        fields = ('id', 'username', 'email', 'password', 'role')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(**validated_data)
         return user
+
+    def get_role(self, obj):
+        if obj.is_superuser or obj.is_staff:
+            return 'admin'
+        return 'user'
 
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,6 +33,13 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         
         # Add extra user data to the response
         user_data = UserSerializer(self.user).data
+        
+        # Inject role based on django permissions
+        if self.user.is_superuser or self.user.is_staff:
+            user_data['role'] = 'admin'
+        else:
+            user_data['role'] = 'user'
+            
         data['data'] = {
             'user': user_data
         }

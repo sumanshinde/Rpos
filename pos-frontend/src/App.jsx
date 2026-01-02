@@ -7,6 +7,7 @@ import OrdersPage from './pages/OrdersPage';
 import KitchenDisplayPage from './pages/KitchenDisplayPage';
 import AnalyticsPage from './pages/AnalyticsPage';
 import CustomersPage from './pages/CustomersPage';
+import MenuPage from './pages/MenuPage';
 import SettingsPage from './pages/SettingsPage';
 import LoginPage from './pages/LoginPage';
 import { selectIsAuthenticated } from './store/slices/authSlice';
@@ -25,6 +26,8 @@ function App() {
     switch (activeView) {
       case 'pos':
         return <POSPage />;
+      case 'menu':
+        return <MenuPage />;
       case 'tables':
         return <TablesPage />;
       case 'orders':

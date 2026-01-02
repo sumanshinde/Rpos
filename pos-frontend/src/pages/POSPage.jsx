@@ -33,9 +33,9 @@ import { fetchTables, updateTable, selectAllTables } from '../store/slices/table
 // Mock Data
 const CATEGORIES = [
     { id: 'all', name: 'All Menu', icon: Grid3x3 },
-    { id: 'burger', name: 'Burger', icon: UtensilsCrossed },
+    { id: 'burgers', name: 'Burger', icon: UtensilsCrossed },
     { id: 'pizza', name: 'Pizza', icon: Pizza },
-    { id: 'drinks', name: 'Drinks', icon: Coffee },
+    { id: 'beverages', name: 'Drinks', icon: Coffee },
     { id: 'dessert', name: 'Dessert', icon: IceCream },
 ];
 
@@ -66,28 +66,32 @@ const POSPage = () => {
         dispatch(openOrderModal(product));
     };
 
-    const handleTableSelect = (tableId) => {
-        if (!tableId) {
+    const handleTableSelect = (tableIdStr) => {
+        if (!tableIdStr) {
             dispatch(setSelectedTable(null));
             return;
         }
 
+        const tableId = parseInt(tableIdStr, 10);
         const table = tables.find(t => t.id === tableId);
-        if (table && table.status === 'available') {
-            // Update table status to occupied
-            dispatch(updateTable({
-                id: tableId,
-                status: 'occupied'
-            }));
+
+        if (table) {
+            // Only update status if it was available (new order start)
+            if (table.status === 'available') {
+                dispatch(updateTable({
+                    id: tableId,
+                    status: 'occupied'
+                }));
+            }
+            dispatch(setSelectedTable(table));
         }
-        dispatch(setSelectedTable(table));
     };
 
     const handleCheckout = (orderData) => {
         const now = new Date();
         const receiptInfo = {
             ...orderData,
-            orderNumber: String(Date.now()).slice(-5),
+            orderNumber: orderData.orderNumber || String(Date.now()).slice(-5),
             date: now.toLocaleDateString(),
             time: now.toLocaleTimeString(),
         };
@@ -150,7 +154,7 @@ const POSPage = () => {
                                         <option
                                             key={table.id}
                                             value={table.id}
-                                            disabled={table.status === 'occupied' || table.status === 'reserved'}
+                                        // disabled={table.status === 'occupied' || table.status === 'reserved'}
                                         >
                                             Table {table.table_number} - {table.section} ({table.status})
                                         </option>

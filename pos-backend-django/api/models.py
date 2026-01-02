@@ -40,7 +40,8 @@ class Order(models.Model):
     STATUS_CHOICES = (
         ('pending', 'Pending'),
         ('preparing', 'Preparing'),
-        ('completed', 'Completed'),
+        ('ready', 'Ready'),
+        ('served', 'Served'),
         ('cancelled', 'Cancelled'),
     )
     PAYMENT_CHOICES = (

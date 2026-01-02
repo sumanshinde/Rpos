@@ -77,4 +77,4 @@ const ProductCard = ({ product, onAddToCart }) => {
     );
 };
 
-export default ProductCard;
+export default React.memo(ProductCard);
