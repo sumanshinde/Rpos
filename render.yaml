@@ -16,10 +16,12 @@ services:
       - key: DATABASE_URL
         value: ""
 
-staticSites:
-  - name: pos-frontend
+  # Frontend: React + Vite (Served as Web Service to ensure stability)
+  - type: web
+    name: pos-frontend
+    env: node
     buildCommand: "cd pos-frontend && npm install && npm run build"
-    publishPath: "./pos-frontend/dist"
+    startCommand: "cd pos-frontend && npx serve -s dist -l $PORT"
     envVars:
       - key: VITE_API_URL
         value: "https://pos-backend.onrender.com/api"
