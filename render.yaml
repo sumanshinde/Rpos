@@ -17,12 +17,10 @@ services:
       - key: DATABASE_URL
         value: "" # SQLite will be used by default if empty
 
-  # Frontend: React + Vite
-  - type: static
-    name: pos-frontend
-    env: static
+staticSites:
+  - name: pos-frontend
     buildCommand: "cd pos-frontend && npm install && npm run build"
     publishPath: "./pos-frontend/dist"
     envVars:
       - key: VITE_API_URL
-        value: "https://pos-backend.onrender.com/api" # Update this after backend deploy
+        value: "https://pos-backend.onrender.com/api" # Update this is the backend service name plus .onrender.com
